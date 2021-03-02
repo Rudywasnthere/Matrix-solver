@@ -1,4 +1,4 @@
-##rudy garcia
+##Rudy Garcia
 
 import math
 
