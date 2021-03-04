@@ -4,12 +4,21 @@ import math
 from array import *
 import time as time
 
+MENU = "\t\t---MENU---\t\t\n 1: change matrix one\n 2: change matrix 2\n 3:use answer matrix as new matrix\n 4: reset both matrixes\n 5: do the darn multiplication!"
+options = range(1,6)
+
 matrix__1 = []
 global matrix_1
 matrix__2 = []
 global matrix_2
 matrix__3 = []
 global matrix_3
+past_1 = []
+global past_1
+past_2
+global past_2
+past_3
+global past_3
 
 def correct_inputs(number = "", num_type = ""):
     play = False
@@ -132,8 +141,26 @@ def maxi(matrix_num):
 def main():
   print("Hello, I do matrices multiplication!")
   quit = "g"
-  while quit != "":
+  main_count = 0
+  while quit != "q":
     play = False
+    matrix__1 = []
+    matrix__2 = []
+    matrix__3 = []
+    if main_count > 0:
+      print(MENU)
+      option = input("Your choice: ")
+      try:
+        option = int(option)
+      except TypeError:
+        print("It needs to be a number at least!")
+      while option not in options:
+        option = input("I need a correct choice: ")
+        try:
+          option = int(option)
+        except TypeError:
+          print("It needs to be a number at least!")
+    
     while play != True:
       length_1 = input("matrix 1 row length: ")
       length_1 = correct_inputs(length_1)
@@ -156,6 +183,11 @@ def main():
     solver(height_1, length_2)
     print("Your resulting matrix:")
     matrix_displayer(height_1, length_2)
-    quit = input("Enter \"q\" to quit, hit enter ot continue")
+    past_1 = matrix__1
+    past_2 = matrix__2
+    past_3 = matrix__3
+    main_count += 1
+    quit = input("Enter \"q\" to quit, hit enter to continue")
   print("Thank you for using me! Have a good rest of your day! ✌")
+  time.sleep(5)
 main()
