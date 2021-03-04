@@ -6,19 +6,16 @@ import time as time
 
 MENU = "\t\t---MENU---\t\t\n 1: change matrix one\n 2: change matrix 2\n 3:use answer matrix as new matrix\n 4: reset both matrixes\n 5: do the darn multiplication!"
 options = range(1,6)
-
+global matrix__1
 matrix__1 = []
-global matrix_1
+global matrix__2
 matrix__2 = []
-global matrix_2
+global matrix__3
 matrix__3 = []
-global matrix_3
-past_1 = []
 global past_1
-past_2
 global past_2
-past_3
 global past_3
+
 
 def correct_inputs(number = "", num_type = ""):
     play = False
@@ -160,29 +157,71 @@ def main():
           option = int(option)
         except TypeError:
           print("It needs to be a number at least!")
-    
-    while play != True:
-      length_1 = input("matrix 1 row length: ")
-      length_1 = correct_inputs(length_1)
-      height_1 = input("matrix 1 coloumn heigth: ")
-      height_1 = correct_inputs(height_1)
-      length_2 = input("matrix 2 row length: ")
-      length_2 = correct_inputs(length_2)
-      height_2 = input("matrix 2 coloumn heigth: ")
-      height_2 = correct_inputs(height_2)
-      if length_1 != height_2:
-        print("These matrices are imcompatible for multiplication")
-      else:
-        print("All right, let's fill those matrixes out! (by rows)")
-        play = True
-    matrix_1(length_1, height_1)
-    maxi(1)
-    matrix_displayer(height_1, length_1, 1)
-    matrix_2(length_2, height_2)
-    matrix_displayer(height_2, length_2, 2)
-    solver(height_1, length_2)
-    print("Your resulting matrix:")
-    matrix_displayer(height_1, length_2)
+      if option == 1:
+        length_1 = input("matrix 1 row length: ")
+        length_1 = correct_inputs(length_1)
+        height_1 = input("matrix 1 coloumn heigth: ")
+        height_1 = correct_inputs(height_1)
+        matrix_1(length_1, height_1)
+        matrix_displayer(height_1, length_1, 1)
+      elif option == 2:
+        length_2 = input("matrix 2 row length: ")
+        length_2 = correct_inputs(length_2)
+        height_2 = input("matrix 2 coloumn heigth: ")
+        height_2 = correct_inputs(height_2)
+        matrix_2(length_2, height_2)
+        matrix_displayer(height_2, length_2, 2)
+      elif option == 3:
+        which = input("Which one? (1 or 2)")
+        try:
+          which = int(which)
+          if which == 1:
+            matrix__1 == past_1
+          elif which == 2:
+            matrix__2 = past_2
+          else:
+            print("No replacement done")
+        except ValueError:
+          print("No replacement done")
+      elif option == 4:
+        length_1 = input("matrix 1 row length: ")
+        length_1 = correct_inputs(length_1)
+        height_1 = input("matrix 1 coloumn heigth: ")
+        height_1 = correct_inputs(height_1)
+        length_2 = input("matrix 2 row length: ")
+        length_2 = correct_inputs(length_2)
+        height_2 = input("matrix 2 coloumn heigth: ")
+        height_2 = correct_inputs(height_2)
+        matrix_1(length_1, height_1)
+        matrix_displayer(height_1, length_1, 1)
+        matrix_2(length_2, height_2)
+        matrix_displayer(height_2, length_2, 2)
+      elif options == 5:
+         solver(height_1, length_2)
+      print("Your resulting matrix:")
+      matrix_displayer(height_1, length_2)
+    else:
+      while play != True:
+        length_1 = input("matrix 1 row length: ")
+        length_1 = correct_inputs(length_1)
+        height_1 = input("matrix 1 coloumn heigth: ")
+        height_1 = correct_inputs(height_1)
+        length_2 = input("matrix 2 row length: ")
+        length_2 = correct_inputs(length_2)
+        height_2 = input("matrix 2 coloumn heigth: ")
+        height_2 = correct_inputs(height_2)
+        if length_1 != height_2:
+          print("These matrices are imcompatible for multiplication")
+        else:
+          print("All right, let's fill those matrixes out! (by rows)")
+          play = True
+      matrix_1(length_1, height_1)
+      matrix_displayer(height_1, length_1, 1)
+      matrix_2(length_2, height_2)
+      matrix_displayer(height_2, length_2, 2)
+      solver(height_1, length_2)
+      print("Your resulting matrix:")
+      matrix_displayer(height_1, length_2)
     past_1 = matrix__1
     past_2 = matrix__2
     past_3 = matrix__3
