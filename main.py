@@ -68,7 +68,6 @@ def matrix_displayer(matrix, height, maximum, length, matrix_num = 3):
   edge = "┏"
   edge_char =  "━━━"
   space_length = len(str(maximum)) + 3
-  print(space_length)
   while len(edge_char) < space_length:
     edge_char += "━" 
   for x in range(0,length):
@@ -78,18 +77,9 @@ def matrix_displayer(matrix, height, maximum, length, matrix_num = 3):
   count = 0
   print(f"formatting matrix {matrix_num}... ")
   time.sleep(0.5)
-  if height == 1:
-    for x in range(0,length):
-      value = matrix[x]
-      string = f" {value}"
-      while len(string) < space_length:
-            string += " "
-      line = line + string
-      count += 1
-      formatted += f"{line}┃\n"
-  if height!= 1:
+  if height:
     try:
-      for r in range(1,height):
+      for r in range(0,height):
         line = " ┃"
         for c in range(0, length):
           value = matrix[r][c]
@@ -141,7 +131,11 @@ def main():
   matrix__1 = []
   matrix__2 = []
   matrix__3 = []
+  past_1 = []
+  past_2 = []
+  past_3 = []
   max_1, max_2, max_3 = 0,0,0
+
   while quit != "q":
     play = False
     matrix__3 = []
@@ -166,6 +160,7 @@ def main():
         if length_1 != height_2:
           print("These matrices are imcompatible for multiplication, no matrix change")
         elif length_1 == height_2:
+          past_1 = matrix__1
           matrix__1, max_1 = matrix_1(length_1, height_1)
           matrix_displayer(matrix__1, height_1, max_1, length_1, 1)
       elif option == 2:
@@ -176,16 +171,19 @@ def main():
         if length_1 != height_2:
           print("These matrices are imcompatible for multiplication, no matrix change")
         elif length_1 == height_2:
+          past_2 = matrix__2
           matrix__2, max_2 = matrix_2(length_2, height_2)
           matrix_displayer(matrix__2, height_2, max_2, length_2, 2)
       elif option == 3:
-        which = input("Which one? (1 or 2)")
+        which = input("Which one? (1 or 2): ")
         try:
           which = int(which)
           if which == 1:
-            matrix__1 == past_1
+            matrix_displayer(matrix__3, height_1, max_3, length_2, 1)
+            matrix__1 == matrix__3
           elif which == 2:
-            matrix__2 = past_2
+            matrix_displayer(matrix__2, height_1, max_2, length_2, 2)
+            matrix__2 = matrix__3
           else:
             print("No replacement done")
         except ValueError:
@@ -204,9 +202,10 @@ def main():
         matrix__2, max_2 = matrix_2(length_2, height_2)
         matrix_displayer(matrix__1, height_2, max_2, length_2, 2)
       elif option == 5:
-        matrix__3, max_3 = solver(matrix__3, height_1, length_2, matrix__1, matrix__2, length_1, height_2)
-        print("Your resulting matrix:")
-        matrix_displayer(matrix_3, height_1, max_3, length_2)
+        matrix__3, max_3 = solver(height_1, length_2, matrix__1, matrix__2, length_1, height_2)
+        print("\nYour resulting matrix:")
+        matrix_displayer(matrix__3, height_1, max_3, length_2)
+        past_3 = matrix__3
     else:
       while play != True:
         length_1 = input("matrix 1 row length: ")
@@ -223,15 +222,15 @@ def main():
           print("All right, let's fill those matrixes out! (by rows)")
           play = True
       matrix__1, max_1 = matrix_1(length_1, height_1)
+      past_1 = matrix__1
       matrix_displayer(matrix__1, height_1, max_1, length_1, 1)
       matrix__2, max_2 = matrix_2(length_2, height_2)
+      past_2 = matrix__2
       matrix_displayer(matrix__2, height_2, max_2, length_2, 2)
       matrix__3, max_3 =solver(height_1, length_2, matrix__1, matrix__2, length_1, height_2)
+      past_3 = matrix__3
       print("Your resulting matrix:")
       matrix_displayer(matrix__3, height_1, max_3, length_2, )
-    past_1 = matrix__1
-    past_2 = matrix__2
-    past_3 = matrix__3
     main_count += 1
     quit = input("Enter \"q\" to quit, hit enter to continue")
   print("Thank you for using me! Have a good rest of your day! ✌")
