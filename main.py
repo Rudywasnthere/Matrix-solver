@@ -3,9 +3,10 @@
 import math
 from array import *
 import time as time
+import random
 
-MENU = "\t\t---MENU---\t\t\n 1: change matrix one\n 2: change matrix 2\n 3: use answer matrix as new matrix\n 4: reset both matrixes\n 5: do the darn multiplication!"
-options = range(1,6)
+MENU = "\t\t---| MENU |---\t\t\n 1: change matrix one\n 2: change matrix 2\n 3: use answer matrix as new matrix\n 4: reset both matrixes\n 5: print saved matrixes\n 6: do the darn multiplication!"
+options = range(1,7)
 
 def correct_inputs(number = "", num_type = ""):
     play = False
@@ -76,7 +77,8 @@ def matrix_displayer(matrix, height, maximum, length, matrix_num = 3):
   formatted += edge
   count = 0
   print(f"formatting matrix {matrix_num}... ")
-  time.sleep(0.5)
+  rand_num = random.random()
+  time.sleep(rand_num)
   if height:
     try:
       for r in range(0,height):
@@ -138,9 +140,9 @@ def main():
 
   while quit != "q":
     play = False
-    matrix__3 = []
     if main_count > 0:
-      print(MENU)
+      if main_count%2 == 1:
+        print(MENU)
       option = input("Your choice: ")
       try:
         option = int(option)
@@ -152,6 +154,7 @@ def main():
           option = int(option)
         except TypeError:
           print("It needs to be a number at least!")
+
       if option == 1:
         length_1 = input("matrix 1 row length: ")
         length_1 = correct_inputs(length_1)
@@ -163,6 +166,7 @@ def main():
           past_1 = matrix__1
           matrix__1, max_1 = matrix_1(length_1, height_1)
           matrix_displayer(matrix__1, height_1, max_1, length_1, 1)
+
       elif option == 2:
         length_2 = input("matrix 2 row length: ")
         length_2 = correct_inputs(length_2)
@@ -174,20 +178,24 @@ def main():
           past_2 = matrix__2
           matrix__2, max_2 = matrix_2(length_2, height_2)
           matrix_displayer(matrix__2, height_2, max_2, length_2, 2)
+
       elif option == 3:
         which = input("Which one? (1 or 2): ")
         try:
           which = int(which)
           if which == 1:
-            matrix_displayer(matrix__3, height_1, max_3, length_2, 1)
-            matrix__1 == matrix__3
+            matrix__1 = past_3
+            matrix_displayer(matrix__1, height_1, max_3, length_2, 1)
+            
           elif which == 2:
+            matrix__2 = past_3
             matrix_displayer(matrix__2, height_1, max_2, length_2, 2)
-            matrix__2 = matrix__3
+            
           else:
             print("No replacement done")
         except ValueError:
           print("No replacement done")
+
       elif option == 4:
         length_1 = input("matrix 1 row length: ")
         length_1 = correct_inputs(length_1)
@@ -197,11 +205,40 @@ def main():
         length_2 = correct_inputs(length_2)
         height_2 = input("matrix 2 coloumn heigth: ")
         height_2 = correct_inputs(height_2)
-        matrix__1, max_1 = matrix_1(length_1, height_1)
-        matrix_displayer(matrix__1, height_1, max_1, length_1, 1)
-        matrix__2, max_2 = matrix_2(length_2, height_2)
-        matrix_displayer(matrix__1, height_2, max_2, length_2, 2)
+        if length_1 != height_2:
+          print("These matrices are imcompatible for multiplication, no matrix change")
+        else:
+          matrix__1, max_1 = matrix_1(length_1, height_1)
+          matrix_displayer(matrix__1, height_1, max_1, length_1, 1)
+          matrix__2, max_2 = matrix_2(length_2, height_2)
+          matrix_displayer(matrix__1, height_2, max_2, length_2, 2)
+
       elif option == 5:
+        print_choice = ""
+        try:
+          print_choice = int(input("Which number of matrix do you want to see (anything not applicable will end the loop): "))
+        except:
+          print("Leaving loop...")
+        while print_choice in range(1,4):
+          if print_choice == 1:
+            matrix, height, maximum, length, number = matrix__1, height_1, max_1, length_1, 1
+          elif print_choice == 2:
+            matrix, height, maximum, length, number = matrix__2, height_2, max_2, length_2, 2
+          elif print_choice == 3:
+            matrix, height, maximum, length, number = matrix__3, height_1, max_3, length_2, 3
+          else:
+            print("Leaving loop...")
+          try:
+            matrix_displayer(matrix, height, maximum, length, number)
+          except:
+            print("error thrown while printing")
+          print_choice_n = input("next matrix number: ")
+          try:
+            print_choice = int(print_choice_n)
+          except:
+            raise Exception("Leaving loop...")
+
+      elif option == 6:
         matrix__3, max_3 = solver(height_1, length_2, matrix__1, matrix__2, length_1, height_2)
         print("\nYour resulting matrix:")
         matrix_displayer(matrix__3, height_1, max_3, length_2)
@@ -234,5 +271,6 @@ def main():
     main_count += 1
     quit = input("Enter \"q\" to quit, hit enter to continue")
   print("Thank you for using me! Have a good rest of your day! ✌")
-  time.sleep(5)
+  randnum = 5*random.random()
+  time.sleep(3 + randnum)
 main()
