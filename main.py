@@ -180,7 +180,7 @@ def main():
           matrix_displayer(matrix__2, height_2, max_2, length_2, 2)
 
       elif option == 3:
-        which = input("Which one? (1 or 2): ")
+        which = input("Save to which new matrix? (1 or 2): ")
         try:
           which = int(which)
           if which == 1:
@@ -216,7 +216,8 @@ def main():
       elif option == 5:
         print_choice = ""
         try:
-          print_choice = int(input("Which number of matrix do you want to see (anything not applicable will end the loop): "))
+          print_choice = input("Which number of matrix do you want to see (anything not applicable will end the loop): ")
+          print_choice = int(print_choice)
         except:
           print("Leaving loop...")
         while print_choice in range(1,4):
@@ -236,7 +237,7 @@ def main():
           try:
             print_choice = int(print_choice_n)
           except:
-            raise Exception("Leaving loop...")
+            print("Leaving loop...")
 
       elif option == 6:
         matrix__3, max_3 = solver(height_1, length_2, matrix__1, matrix__2, length_1, height_2)
